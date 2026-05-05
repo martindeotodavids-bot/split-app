@@ -495,7 +495,7 @@
     </button>
   </header>
 
-  <main class="scroll-main pt-24 pb-40 px-2 max-w-2xl mx-auto overscroll-contain">
+  <main class="scroll-main pt-24 pb-40 px-3 overscroll-contain">
     <div class="mb-6">
       <h2 class="text-section-title font-semibold text-text-primary mb-1">Selecciona tus items</h2>
       <p class="text-caption-label text-text-secondary">Marca lo que consumiste para dividir la cuenta.</p>
@@ -771,13 +771,7 @@ const state = {
 
   // Items from bill — en upload solo existen como líneas de boleta con nombre/precio/unidades
   // En selección el usuario decide: solo yo, múltiples unidades, o compartir con N
-  items: [
-    { id: 1, name: 'Schop Kunstmann', price: 5000,  totalUnits: 8,  billUnits: 8 },
-    { id: 2, name: 'Lomo Saltado',    price: 12000, totalUnits: 1,  billUnits: 1 },
-    { id: 3, name: 'Papas Fritas XL', price: 12500, totalUnits: 1,  billUnits: 1 },
-    { id: 4, name: 'Botella de Vino', price: 24000, totalUnits: 1,  billUnits: 1 },
-    { id: 5, name: 'Ceviche Mixto',   price: 9800,  totalUnits: 1,  billUnits: 1 },
-  ],
+  items: [],
   // Selecciones del usuario en pantalla de selección
   // mode: 'none' | 'solo' | 'units' | 'split'
   selections: {}, // id -> { mode, units, splitWith }
@@ -821,6 +815,7 @@ const DEFAULT_ITEMS = [
   { name: 'Papas Fritas XL', price: 12500, billUnits: 1, totalUnits: 1 },
   { name: 'Botella de Vino', price: 24000, billUnits: 1, totalUnits: 1 },
   { name: 'Ceviche Mixto',   price: 9800,  billUnits: 1, totalUnits: 1 },
+  { name: 'Piscola',         price: 4500,  billUnits: 1, totalUnits: 1 },
 ];
 
 function handleImageFile(input) {
