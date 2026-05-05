@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#474746",
+                    "inverse-primary": "#476800",
+                    "inverse-on-surface": "#2e3225",
+                    "surface-variant": "#32362a",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "surface-card": "#1A1A1A",
+                    "surface-container-lowest": "#0c0f06",
+                    "primary-text-on-accent": "#0D0D0D",
+                    "inverse-surface": "#e1e4d2",
+                    "on-primary-fixed": "#131f00",
+                    "status-success": "#B6F542",
+                    "status-success-bg": "#1A2E0D",
+                    "on-tertiary-fixed-variant": "#47435f",
+                    "on-background": "#e1e4d2",
+                    "surface-elevated": "#242424",
+                    "surface-bright": "#373b2e",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-secondary-container": "#b7b5b4",
+                    "outline": "#8c947c",
+                    "primary-fixed": "#b7f643",
+                    "on-tertiary": "#312d47",
+                    "error-container": "#93000a",
+                    "surface-container-high": "#272b1f",
+                    "on-secondary": "#313030",
+                    "on-surface-variant": "#c2cab0",
+                    "border-subtle": "#2E2E2E",
+                    "primary-dark": "#8FBF2E",
+                    "background": "#11150a",
+                    "status-danger": "#FF4D4D",
+                    "on-surface": "#e1e4d2",
+                    "on-tertiary-fixed": "#1c1831",
+                    "tertiary": "#fffdff",
+                    "on-tertiary-container": "#65607d",
+                    "primary-fixed-dim": "#9cd924",
+                    "surface-container": "#1d2115",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#354e00",
+                    "tertiary-fixed-dim": "#c9c2e3",
+                    "surface-tint": "#9cd924",
+                    "tertiary-fixed": "#e5deff",
+                    "primary": "#fffff3",
+                    "secondary-fixed": "#e5e2e1",
+                    "text-secondary": "#8A8A8A",
+                    "surface": "#11150a",
+                    "surface-dim": "#11150a",
+                    "status-warning-bg": "#2E1F00",
+                    "status-warning": "#F5A623",
+                    "outline-variant": "#434935",
+                    "primary-container": "#b6f542",
+                    "bg-base": "#0D0D0D",
+                    "surface-container-highest": "#32362a",
+                    "text-primary": "#F5F5F5",
+                    "text-disabled": "#4A4A4A",
+                    "secondary": "#c8c6c5",
+                    "tertiary-container": "#e4ddff",
+                    "on-error": "#690005",
+                    "on-primary": "#233600",
+                    "surface-container-low": "#191d12",
+                    "on-primary-container": "#4c6e00",
+                    "status-danger-bg": "#2E0D0D",
+                    "secondary-container": "#474746",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "screen-edge": "20px",
+                    "touch-target-min": "48px",
+                    "base": "8px",
+                    "stack-gap": "12px",
+                    "card-inner": "16px",
+                    "item-gap": "8px",
+                    "bottom-bar-height": "80px"
+            },
+            "fontFamily": {
+                    "display-amount": ["Inter"],
+                    "caption-label": ["Inter"],
+                    "button-text": ["Inter"],
+                    "hero-amount": ["Inter"],
+                    "badge-text": ["Inter"],
+                    "body-main": ["Inter"],
+                    "section-title": ["Inter"]
+            },
+            "fontSize": {
+                    "display-amount": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "caption-label": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "button-text": ["16px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                    "hero-amount": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "badge-text": ["12px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                    "body-main": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "section-title": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0D0D0D;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-bg-base text-on-surface antialiased min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-5 h-16 bg-neutral-950 border-b border-neutral-800 sticky top-0 z-50">
+<button class="transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-lime-400" data-icon="menu">menu</span>
+</button>
+<span class="text-2xl font-black italic text-lime-400 font-inter tracking-tight">Split</span>
+<button class="transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-lime-400" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<main class="px-screen-edge py-stack-gap space-y-6 max-w-2xl mx-auto">
+<!-- Live Header & Progress Bar -->
+<section class="space-y-4">
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<p class="font-caption-label text-caption-label text-text-secondary uppercase tracking-widest">Estado del Cobro</p>
+<h1 class="font-display-amount text-display-amount text-on-surface">$32.000</h1>
+</div>
+<div class="text-right">
+<p class="font-caption-label text-caption-label text-text-secondary">Meta: $87.000</p>
+<span class="font-badge-text text-badge-text text-status-success bg-status-success-bg px-2 py-1 rounded-lg">36% Recolectado</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-surface-elevated h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-[36%] transition-all duration-500"></div>
+</div>
+<p class="font-caption-label text-caption-label text-on-surface-variant italic">"$32.000 de $87.000 recolectado"</p>
+</section>
+<!-- Alert Banner -->
+<div class="flex items-center gap-3 bg-status-warning-bg border-l-4 border-status-warning p-card-inner rounded-xl">
+<span class="material-symbols-outlined text-status-warning" data-icon="warning">warning</span>
+<p class="font-body-main text-body-main text-status-warning font-semibold">Faltan items por reclamar</p>
+</div>
+<!-- Bento Grid: Items Status -->
+<section class="space-y-4">
+<h2 class="font-section-title text-section-title text-on-surface">Items del Evento</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-gap">
+<!-- Item: Pizza (Fully Claimed) -->
+<div class="bg-surface-card p-card-inner rounded-xl border border-border-subtle flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary-container transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-success"></div>
+<div class="flex justify-between items-start">
+<span class="font-body-main text-body-main font-bold">Pizza Familiar x4</span>
+<span class="material-symbols-outlined text-status-success" data-icon="check_circle">check_circle</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="font-caption-label text-caption-label text-text-secondary">8/8 Reclamados</span>
+<span class="font-body-main text-body-main font-bold">$42.000</span>
+</div>
+</div>
+<!-- Item: Bebidas (Partially Claimed) -->
+<div class="bg-surface-card p-card-inner rounded-xl border border-border-subtle flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary-container transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-warning"></div>
+<div class="flex justify-between items-start">
+<span class="font-body-main text-body-main font-bold">Bebidas 3L</span>
+<span class="font-badge-text text-badge-text bg-status-warning-bg text-status-warning px-2 py-0.5 rounded uppercase">⚠️ 5/8 claimed</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="font-caption-label text-caption-label text-text-secondary">3 pendientes</span>
+<span class="font-body-main text-body-main font-bold">$15.000</span>
+</div>
+</div>
+<!-- Item: Picoteo (Not Claimed) -->
+<div class="bg-surface-card p-card-inner rounded-xl border border-border-subtle flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary-container transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-danger"></div>
+<div class="flex justify-between items-start">
+<span class="font-body-main text-body-main font-bold">Mix de Picoteo</span>
+<span class="material-symbols-outlined text-status-danger" data-icon="error">error</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="font-caption-label text-caption-label text-text-secondary">0/10 Reclamados</span>
+<span class="font-body-main text-body-main font-bold">$30.000</span>
+</div>
+</div>
+<!-- Summary Card -->
+<div class="bg-primary-container p-card-inner rounded-xl flex flex-col justify-center items-center text-center space-y-2">
+<span class="material-symbols-outlined text-primary-text-on-accent text-3xl" data-icon="bolt">bolt</span>
+<p class="font-button-text text-button-text text-primary-text-on-accent">Gestionar Repartición</p>
+</div>
+</div>
+</section>
+<!-- Participants List -->
+<section class="space-y-4">
+<div class="flex justify-between items-center">
+<h2 class="font-section-title text-section-title text-on-surface">Participantes</h2>
+<button class="text-lime-400 font-button-text text-caption-label">Recordar a todos</button>
+</div>
+<div class="space-y-item-gap">
+<!-- Participant 1 -->
+<div class="bg-surface-card p-card-inner rounded-xl flex items-center justify-between border border-border-subtle">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-lime-400">
+<img class="w-full h-full object-cover" data-alt="A portrait of a young man with a friendly smile, outdoor lighting in a Santiago urban setting. High contrast lighting with electric lime green accents in his clothing to match the financial app's energetic and modern Chilean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDAaMffpDs1m4207Ircdo1TjnXlviljidFZO8ChOd1Gy0Qv2Q8RzwO5j4TANCTwPDRQ4FNnJAwZACQxPkQH7T7ptfJi9uFhmmvcFJsTgRA1I7tMzXsSp7is7lOzEfqv9Y4B7ZZps9xQaOXpzhWq65evZo1Fgtp-Yz3yEYVZpN4VuzyATLoaU2wevuHP4ufkDMRwkrmc2rZYlm0SGpV1CgMbDTLu7lB1dRUozf_lZ1MjW3EqQs6Rgz-5AhDjpQava92Dn5vrBRGpf0"/>
+</div>
+<div>
+<p class="font-body-main text-body-main font-bold text-on-surface">Rodrigo Paz</p>
+<p class="font-caption-label text-caption-label text-text-secondary">Pizzas, Bebidas</p>
+</div>
+</div>
+<div class="text-right flex flex-col items-end gap-1">
+<span class="font-body-main text-body-main font-bold text-on-surface">$12.500</span>
+<span class="font-badge-text text-badge-text text-status-success bg-status-success-bg px-3 py-1 rounded-full uppercase">Pagado</span>
+</div>
+</div>
+<!-- Participant 2 -->
+<div class="bg-surface-card p-card-inner rounded-xl flex items-center justify-between border border-border-subtle">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-neutral-700">
+<img class="w-full h-full object-cover" data-alt="Portrait of a professional woman looking at the camera, modern studio lighting with deep shadows. The aesthetic is clean and high-contrast, featuring subtle lime-green reflective elements in the background to align with the vibrant electric brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpQoMURHKjED_uPMN_wFcpkvfsR5Y1OI01fTSmN4vXo3HIXD1ahWSmsGwC_uzx6TPYuCwmhMMskTYJe-lAaHHH2ToSOl7d7mlXSJ5DDIxyDuoLxEZWybwUTXCKkKo-ETgDBOdF0MJy3Y5jD3vyizUlJBssSgmz1eP3VrJFlaIzOG81QwyNS2d814iPrYQOoUcuE5GxYQaN7xUfOQORv1eXukFxiQf4VpysOlvmkFoBU1Y7HO-yaHOQ99PZpo-nIqlynIuyBHr4E-E"/>
+</div>
+<div>
+<p class="font-body-main text-body-main font-bold text-on-surface">Camila Soto</p>
+<p class="font-caption-label text-caption-label text-text-secondary">Bebidas</p>
+</div>
+</div>
+<div class="text-right flex flex-col items-end gap-1">
+<span class="font-body-main text-body-main font-bold text-on-surface">$4.200</span>
+<span class="font-badge-text text-badge-text text-status-warning bg-status-warning-bg px-3 py-1 rounded-full uppercase">Pendiente</span>
+</div>
+</div>
+<!-- Participant 3 -->
+<div class="bg-surface-card p-card-inner rounded-xl flex items-center justify-between border border-border-subtle">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-neutral-700">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a smiling man against a dark architectural background in Chile. Sharp focus, high contrast, with a sleek and modern look. The palette is dominated by dark neutrals with pops of electric lime in the UI elements surrounding the image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnhGvybYXbW5qwwuUgXyUSdGNbTRdcvYaEXAQSL37qWxWBLDQghf5xvXutw7-TLpibkpINa1OOtnsKak6-Qs-pAaQT-qGfBWsHdse0jIWB0s8P_kLtlOj6ixUZDcc6kNtys2VPg4m7HFmaZCt4dW1QQMFgqh7GrvN-ng8L78C6A3KLhUZEyTVcMrIsuOsXJQi0jO9GrtQ76mEA4gQ9MsQxVgf9YXQY8WZ6ILBBVPJtR2lFc3CYOldt5Mtqa0WEI1OqORjM-wsD1cE"/>
+</div>
+<div>
+<p class="font-body-main text-body-main font-bold text-on-surface">Ignacio Vera</p>
+<p class="font-caption-label text-caption-label text-text-secondary">Sin reclamar</p>
+</div>
+</div>
+<div class="text-right flex flex-col items-end gap-1">
+<span class="font-body-main text-body-main font-bold text-on-surface">$0</span>
+<span class="font-badge-text text-badge-text text-status-warning bg-status-warning-bg px-3 py-1 rounded-full uppercase">Pendiente</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Destination Check: Live Dashboard counts as Sessions/Top Level) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe bg-neutral-950 h-20 border-t border-neutral-800 z-50">
+<a class="flex flex-col items-center justify-center text-neutral-500 hover:text-lime-300 active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 hover:text-lime-300 active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="document_scanner">document_scanner</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Escanear</span>
+</a>
+<!-- Active Tab: Sessions/Live Dashboard -->
+<a class="flex flex-col items-center justify-center text-lime-400 bg-neutral-900 rounded-2xl px-4 py-1 border-l-4 border-lime-400 active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Sesiones</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 hover:text-lime-300 active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Perfil</span>
+</a>
+</nav>
+<!-- Floating Action Button (Only on Home/Dashboard screens) -->
+<div class="fixed bottom-24 right-5 z-40">
+<button class="w-14 h-14 bg-primary-container text-primary-text-on-accent rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</body></html>

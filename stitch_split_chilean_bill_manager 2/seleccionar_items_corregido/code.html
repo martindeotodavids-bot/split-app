@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#474746",
+                        "inverse-primary": "#476800",
+                        "inverse-on-surface": "#2e3225",
+                        "surface-variant": "#32362a",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-card": "#1A1A1A",
+                        "surface-container-lowest": "#0c0f06",
+                        "primary-text-on-accent": "#0D0D0D",
+                        "inverse-surface": "#e1e4d2",
+                        "on-primary-fixed": "#131f00",
+                        "status-success": "#B6F542",
+                        "status-success-bg": "#1A2E0D",
+                        "on-tertiary-fixed-variant": "#47435f",
+                        "on-background": "#e1e4d2",
+                        "surface-elevated": "#242424",
+                        "surface-bright": "#373b2e",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-secondary-container": "#b7b5b4",
+                        "outline": "#8c947c",
+                        "primary-fixed": "#b7f643",
+                        "on-tertiary": "#312d47",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#272b1f",
+                        "on-secondary": "#313030",
+                        "on-surface-variant": "#c2cab0",
+                        "border-subtle": "#2E2E2E",
+                        "primary-dark": "#8FBF2E",
+                        "background": "#11150a",
+                        "status-danger": "#FF4D4D",
+                        "on-surface": "#e1e4d2",
+                        "on-tertiary-fixed": "#1c1831",
+                        "tertiary": "#fffdff",
+                        "on-tertiary-container": "#65607d",
+                        "primary-fixed-dim": "#9cd924",
+                        "surface-container": "#1d2115",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#354e00",
+                        "tertiary-fixed-dim": "#c9c2e3",
+                        "surface-tint": "#9cd924",
+                        "tertiary-fixed": "#e5deff",
+                        "primary": "#fffff3",
+                        "secondary-fixed": "#e5e2e1",
+                        "text-secondary": "#8A8A8A",
+                        "surface": "#11150a",
+                        "surface-dim": "#11150a",
+                        "status-warning-bg": "#2E1F00",
+                        "status-warning": "#F5A623",
+                        "outline-variant": "#434935",
+                        "primary-container": "#b6f542",
+                        "bg-base": "#0D0D0D",
+                        "surface-container-highest": "#32362a",
+                        "text-primary": "#F5F5F5",
+                        "text-disabled": "#4A4A4A",
+                        "secondary": "#c8c6c5",
+                        "tertiary-container": "#e4ddff",
+                        "on-error": "#690005",
+                        "on-primary": "#233600",
+                        "surface-container-low": "#191d12",
+                        "on-primary-container": "#4c6e00",
+                        "status-danger-bg": "#2E0D0D",
+                        "secondary-container": "#474746",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "screen-edge": "20px",
+                        "touch-target-min": "48px",
+                        "base": "8px",
+                        "stack-gap": "12px",
+                        "card-inner": "16px",
+                        "item-gap": "8px",
+                        "bottom-bar-height": "80px"
+                    },
+                    "fontFamily": {
+                        "display-amount": ["Inter"],
+                        "caption-label": ["Inter"],
+                        "button-text": ["Inter"],
+                        "hero-amount": ["Inter"],
+                        "badge-text": ["Inter"],
+                        "body-main": ["Inter"],
+                        "section-title": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-amount": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "caption-label": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "button-text": ["16px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                        "hero-amount": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "badge-text": ["12px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                        "body-main": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "section-title": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0D0D0D;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-main text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 h-16 bg-neutral-950 flex justify-between items-center px-5 border-b border-neutral-800">
+<button class="transition-transform active:scale-95 duration-200 text-lime-400">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-inter font-bold tracking-tight text-2xl italic text-lime-400">Split</h1>
+<button class="transition-transform active:scale-95 duration-200 text-lime-400">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-5 max-w-2xl mx-auto">
+<!-- Section Header -->
+<div class="mb-8">
+<h2 class="font-section-title text-section-title text-text-primary mb-2">Selecciona tus items</h2>
+<p class="font-caption-label text-caption-label text-text-secondary">Marca lo que consumiste para dividir la cuenta.</p>
+</div>
+<!-- Items List (Bento-like stacked layout) -->
+<div class="space-y-4">
+<!-- Item 1: Lomo Saltado -->
+<div class="bg-surface-card rounded-xl p-card-inner border border-border-subtle flex items-center justify-between transition-all hover:bg-neutral-900 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-80" data-alt="A high-quality, realistic, and appetizing photo of a traditional Peruvian Lomo Saltado (stir-fried beef with onions, tomatoes, and fries) in a dark aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVmMdiyFV1hkxS2QnDFTK7WDSe9d2ATUyIsx3e-FBi2WEUd3CWsgx7ENRXd54BjOke0gK8UZTcYf70cJMDqroDCbgALcZIITn-VO0jZU2NtIh0PO0Nw-fJaU1owU52ZJYVXabD58SbvNew0KH3_meaK_kxGAFJ_FevTQ5wZ8pOafLeG8WKz-_LjVGR3vgKsIuMCV2q5efqFiMkvvWSrQS60V6-YEj44CJBlaBH7jD_zN_KRBN0rVzVxZ6qcRccNmQ1m0FGbOwEn8k"/>
+</div>
+<div>
+<h3 class="font-body-main text-text-primary font-semibold">Lomo saltado</h3>
+<p class="font-caption-label text-lime-400 font-bold">$12.000</p>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-7 h-7 rounded border-2 border-neutral-600 flex items-center justify-center cursor-pointer group-hover:border-lime-400 transition-colors">
+<span class="material-symbols-outlined text-lime-400 text-lg hidden" data-icon="check">check</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Schop Stepper -->
+<div class="bg-surface-card rounded-xl p-card-inner border-l-4 border-lime-400 bg-neutral-900 transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-80" data-alt="A macro photograph of fresh beer glasses with frothy heads, illuminated by vibrant, electric green ambient lighting in a high-end social club. The background is deep black, creating a high-contrast and energetic mood. The image captures the dynamic, social spirit of a nightlife financial experience with crisp details and a modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1_zPg49mVnwHKtaOE3GHBLOdIdizseZVLrd7j5Iw66ThWBVmVzaTG2i32AQg1ojrKlaZJX3KgSEBhKCLAc7nFvM9_9edZfxpCNXEdOE_pmv3ed6dUB7a54pdsR-Wl3CXyPQmj1A34Ab8U_4M-11wSZ0YVKK6958s1jTONXCtVL6bWmEGDU1XrFjTrBLC_uRvdsl7U8PKkAI5fV9bGjsfz4Qok9VFHh1-_y6pU4k-cwlq5CeBwSZ0Ysw3mYdkrB8iq2QePANfYNbI"/>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-body-main text-text-primary font-semibold">Schop</h3>
+<span class="bg-status-success-bg text-status-success text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter">Tu selección</span>
+</div>
+<p class="font-caption-label text-text-secondary">8 unidades disponibles</p>
+<p class="font-caption-label text-lime-400 font-bold">$5.000 c/u</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-4 border-t border-neutral-800">
+<span class="text-caption-label font-medium text-text-primary">¿Cuántos pides?</span>
+<div class="flex items-center gap-4 bg-surface-elevated rounded-full px-2 py-1">
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface hover:bg-neutral-700 active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<span class="font-display-amount text-xl min-w-[24px] text-center text-lime-400">1</span>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-lime-400 text-neutral-950 hover:bg-lime-300 active:scale-90 transition-all">
+<span class="material-symbols-outlined font-bold" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 3: Botella de vino Split -->
+<div class="bg-surface-card rounded-xl p-card-inner border border-border-subtle flex items-center justify-between transition-all hover:bg-neutral-900 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-80" data-alt="An elegant, minimalist still life of a wine bottle on a dark reflective surface. Electric lime lighting accents the silhouette of the bottle, creating a sophisticated and professional atmosphere. The scene is high-contrast, moody, and clean, perfect for a high-end expense-sharing application targeting a modern, Chilean social audience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkHrfz14J9IL7oiKiV-19JxVbZYjPer7IUFBsUobmFHqkuBy8U2MSUNUSl9B560XCVJrqSWVYF3l6WChMCcNXS9MXuF_SBGSIf4ocmpC1GSXGonAXgldhm61yB46jbaGs9b6gmhkcFXAe1KsQhC_plh7-kNnagMOuiMPIC5vcPGell-Tmzfc5gR93SNvKvOaq64OUBzU1Lusxk_ypK67-gLVal7TIABAiFc4zKI1iyP1QjRLSL3LpO1hA3ko2c1OKdbAnYtVddI1M"/>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-body-main text-text-primary font-semibold">Botella de vino</h3>
+<div class="flex items-center gap-1 bg-neutral-800 px-2 py-0.5 rounded text-[10px] text-lime-400 border border-lime-900/50">
+<span class="material-symbols-outlined text-[12px]" data-icon="group">group</span>
+<span class="font-bold uppercase tracking-widest">Split</span>
+</div>
+</div>
+<p class="font-caption-label text-lime-400 font-bold">$24.000</p>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-7 h-7 rounded border-2 border-neutral-600 flex items-center justify-center cursor-pointer hover:border-lime-400 transition-colors">
+<span class="material-symbols-outlined text-lime-400 text-lg" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Progress Summary -->
+<div class="mt-8 bg-surface-container-low p-4 rounded-xl border border-neutral-800">
+<div class="flex justify-between items-center mb-2">
+<span class="font-caption-label text-text-secondary">Progreso de la mesa</span>
+<span class="font-caption-label font-bold text-lime-400">12/15 items listos</span>
+</div>
+<div class="h-2 w-full bg-neutral-800 rounded-full overflow-hidden">
+<div class="h-full bg-lime-400 w-[80%] rounded-full"></div>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-neutral-950 border-t border-neutral-800 z-50">
+<div class="max-w-2xl mx-auto px-5 py-4 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-caption-label text-text-secondary uppercase tracking-widest font-bold">Tu total</span>
+<span class="font-display-amount text-display-amount text-primary-container">$17.500</span>
+</div>
+<button class="w-full h-[56px] bg-primary-container text-primary-text-on-accent rounded-xl font-button-text text-button-text font-bold active:scale-[0.97] transition-transform flex items-center justify-center gap-2">
+                Confirmar mis items
+                <span class="material-symbols-outlined text-xl" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar (Shared Component) -->
+<nav class="fixed bottom-20 left-0 w-full flex justify-around items-center px-4 pb-safe bg-neutral-950 border-t border-neutral-800 h-20 md:hidden z-40">
+<div class="flex flex-col items-center justify-center text-neutral-500">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Inicio</span>
+</div>
+<div class="flex flex-col items-center justify-center text-lime-400 bg-neutral-900 rounded-2xl px-4 py-1 border-l-4 border-lime-400">
+<span class="material-symbols-outlined" data-icon="document_scanner">document_scanner</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Escanear</span>
+</div>
+<div class="flex flex-col items-center justify-center text-neutral-500">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Sesiones</span>
+</div>
+<div class="flex flex-col items-center justify-center text-neutral-500">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Perfil</span>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary-fixed-variant": "#474746",
+                "inverse-primary": "#476800",
+                "inverse-on-surface": "#2e3225",
+                "surface-variant": "#32362a",
+                "on-secondary-fixed": "#1c1b1b",
+                "surface-card": "#1A1A1A",
+                "surface-container-lowest": "#0c0f06",
+                "primary-text-on-accent": "#0D0D0D",
+                "inverse-surface": "#e1e4d2",
+                "on-primary-fixed": "#131f00",
+                "status-success": "#B6F542",
+                "status-success-bg": "#1A2E0D",
+                "on-tertiary-fixed-variant": "#47435f",
+                "on-background": "#e1e4d2",
+                "surface-elevated": "#242424",
+                "surface-bright": "#373b2e",
+                "secondary-fixed-dim": "#c8c6c5",
+                "on-secondary-container": "#b7b5b4",
+                "outline": "#8c947c",
+                "primary-fixed": "#b7f643",
+                "on-tertiary": "#312d47",
+                "error-container": "#93000a",
+                "surface-container-high": "#272b1f",
+                "on-secondary": "#313030",
+                "on-surface-variant": "#c2cab0",
+                "border-subtle": "#2E2E2E",
+                "primary-dark": "#8FBF2E",
+                "background": "#11150a",
+                "status-danger": "#FF4D4D",
+                "on-surface": "#e1e4d2",
+                "on-tertiary-fixed": "#1c1831",
+                "tertiary": "#fffdff",
+                "on-tertiary-container": "#65607d",
+                "primary-fixed-dim": "#9cd924",
+                "surface-container": "#1d2115",
+                "error": "#ffb4ab",
+                "on-primary-fixed-variant": "#354e00",
+                "tertiary-fixed-dim": "#c9c2e3",
+                "surface-tint": "#9cd924",
+                "tertiary-fixed": "#e5deff",
+                "primary": "#fffff3",
+                "secondary-fixed": "#e5e2e1",
+                "text-secondary": "#8A8A8A",
+                "surface": "#11150a",
+                "surface-dim": "#11150a",
+                "status-warning-bg": "#2E1F00",
+                "status-warning": "#F5A623",
+                "outline-variant": "#434935",
+                "primary-container": "#b6f542",
+                "bg-base": "#0D0D0D",
+                "surface-container-highest": "#32362a",
+                "text-primary": "#F5F5F5",
+                "text-disabled": "#4A4A4A",
+                "secondary": "#c8c6c5",
+                "tertiary-container": "#e4ddff",
+                "on-error": "#690005",
+                "on-primary": "#233600",
+                "surface-container-low": "#191d12",
+                "on-primary-container": "#4c6e00",
+                "status-danger-bg": "#2E0D0D",
+                "secondary-container": "#474746",
+                "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "screen-edge": "20px",
+                "touch-target-min": "48px",
+                "base": "8px",
+                "stack-gap": "12px",
+                "card-inner": "16px",
+                "item-gap": "8px",
+                "bottom-bar-height": "80px"
+            },
+            "fontFamily": {
+                "display-amount": ["Inter"],
+                "caption-label": ["Inter"],
+                "button-text": ["Inter"],
+                "hero-amount": ["Inter"],
+                "badge-text": ["Inter"],
+                "body-main": ["Inter"],
+                "section-title": ["Inter"]
+            },
+            "fontSize": {
+                "display-amount": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "caption-label": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                "button-text": ["16px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                "hero-amount": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "badge-text": ["12px", {"lineHeight": "1.0", "fontWeight": "600"}],
+                "body-main": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "section-title": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #0D0D0D; color: #e1e4d2; font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .bg-mesh {
+            background-color: #0D0D0D;
+            background-image: radial-gradient(at 0% 0%, rgba(182, 245, 66, 0.08) 0, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(182, 245, 66, 0.05) 0, transparent 50%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-mesh min-h-screen flex flex-col">
+<header class="fixed top-0 z-50 w-full flex justify-between items-center px-5 h-16 bg-neutral-950 dark:bg-neutral-950 border-b border-neutral-800">
+<div class="flex items-center gap-4">
+<button class="transition-transform active:scale-95 duration-200 text-lime-400 dark:text-lime-400">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<span class="font-inter font-bold tracking-tight text-lime-400 dark:text-lime-400">Cena en Osaka</span>
+</div>
+<button class="transition-transform active:scale-95 duration-200 text-lime-400 dark:text-lime-400">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+</header>
+<main class="flex-1 flex flex-col pt-24 pb-bottom-bar-height px-screen-edge">
+<div class="flex flex-col items-center justify-center text-center mb-10">
+<div class="w-20 h-20 bg-primary-container rounded-full flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(182,245,66,0.2)]">
+<span class="material-symbols-outlined text-on-primary-container text-4xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h1 class="font-section-title text-section-title text-text-primary mb-2">¡Todo listo!</h1>
+<p class="font-body-main text-body-main text-text-secondary max-w-[280px]">Comparte el link para que todos seleccionen sus platos.</p>
+</div>
+<div class="bg-surface-card border border-border-subtle rounded-xl p-card-inner mb-8">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="font-display-amount text-display-amount text-primary-container">$120.000</h2>
+<p class="font-caption-label text-caption-label text-text-secondary uppercase tracking-widest mt-1">Total de la cuenta</p>
+</div>
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-surface-card overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young man with a friendly expression, set against a dark, minimalist studio background. The lighting is dramatic and focused, highlighting facial features with a cool, modern aesthetic consistent with a high-end fintech application. The overall mood is sophisticated and reliable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6_XQVTj2x8WLtaOn5y75HzKHyGUsq_57AMvTzQO2zITM5E-HmYxoKI5L61Hmdlg5wZIRYhPX6PuBmci0N5MMHbhp-9P6wU12A0Wgczdd1hxMPsT8IH5BTBIu8yHmdjp2nd9ScWh5wIFRXBOtNGoffH12RpvaH-qTnwnszQW2HzYdjho6QETTAqRE6vW5BftuST_wz0TVmTbDSgVTqeH5FaFh8lN_z0CK5s7rz4m50nZmEaguSVEmI2_xNXakSoDjTDxU8yoVQ_1o"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface-card overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-contrast profile picture of a woman smiling, captured with professional studio lighting that creates a soft glow. The background is a deep charcoal grey to match the dark-mode UI theme. The visual style is clean and energetic, emphasizing clarity and modern social connectivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO41GKH4XUH2l_t-GJNNuWW9--GGGH-EkyLQo_wFYaCUGTAS1uZfMmeWoMmAypy2QTFSwaAnKIXXGvOLuef3auwrDgLy_MqpzF7mnp8rCkivcqjTuMnac6rR15JvKC6hDfVzOXH3JO5nScubB2_L37hPz98Zuv4hhvO110a6DxwnyTBm-hqLf8aqPeUWPNcLwxv004yydxchc5zBdLeo_jJll5sPo0omsynkiLOfSQ_OqB74qhGIK0PQ9OGx11gmIRQIrNy3vHCS8"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface-card bg-surface-elevated flex items-center justify-center text-primary-container font-bold text-xs">
+                        +3
+                    </div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 bg-background/50 p-3 rounded-lg border border-border-subtle/50">
+<span class="material-symbols-outlined text-text-secondary" data-icon="groups">groups</span>
+<span class="font-body-main text-body-main text-text-primary">5 personas en la sesión</span>
+</div>
+<div class="flex items-center gap-3 bg-background/50 p-3 rounded-lg border border-border-subtle/50">
+<span class="material-symbols-outlined text-text-secondary" data-icon="location_on">location_on</span>
+<span class="font-body-main text-body-main text-text-primary">Osaka, Vitacura</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-elevated border-2 border-dashed border-neutral-700 rounded-2xl p-6 flex flex-col items-center text-center">
+<div class="bg-neutral-800 p-4 rounded-xl mb-4">
+<span class="material-symbols-outlined text-lime-400 text-3xl" data-icon="link">link</span>
+</div>
+<p class="font-caption-label text-caption-label text-text-secondary mb-1">Link de invitación</p>
+<p class="font-body-main text-body-main text-text-primary font-mono bg-neutral-900 px-3 py-1 rounded">split.app/cena-osaka-492</p>
+</div>
+</main>
+<footer class="fixed bottom-0 left-0 w-full bg-neutral-950 px-screen-edge pb-10 pt-4 flex flex-col gap-3">
+<button class="w-full h-14 bg-primary-container text-on-primary-container font-button-text text-button-text rounded-xl flex items-center justify-center gap-3 active:scale-[0.97] transition-transform">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+            Compartir por WhatsApp
+        </button>
+<button class="w-full h-14 bg-transparent border border-neutral-700 text-text-primary font-button-text text-button-text rounded-xl flex items-center justify-center gap-3 active:scale-[0.97] transition-transform">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+            Seleccionar mis items
+        </button>
+</footer>
+</body></html>
