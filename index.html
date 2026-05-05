@@ -2,7 +2,7 @@
 <html class="dark" lang="es">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <title>Split – Divide la cuenta</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -167,21 +167,8 @@
   <input type="file" id="input-camera"  accept="image/*" capture="environment" style="display:none;" onchange="handleImageFile(this)"/>
   <input type="file" id="input-gallery" accept="image/*"                        style="display:none;" onchange="handleImageFile(this)"/>
 
-  <!-- Header -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-neutral-950 border-b border-neutral-800 h-16 flex justify-between items-center px-5">
-    <div class="flex items-center gap-4">
-      <button class="text-lime-400 p-1" onclick="toggleMenu()">
-        <span class="material-symbols-outlined">menu</span>
-      </button>
-      <span class="text-2xl font-black italic text-lime-400 tracking-tight">Split</span>
-    </div>
-    <button class="text-lime-400 p-1">
-      <span class="material-symbols-outlined">account_circle</span>
-    </button>
-  </header>
-
   <!-- Main -->
-  <main class="scroll-main pt-24 pb-36 px-screen-edge space-y-6">
+  <main class="scroll-main pt-6 pb-36 px-2 space-y-6">
 
     <!-- ESTADO 1: Hero upload (sin boleta aún) -->
     <section id="upload-hero" class="flex flex-col items-center">
@@ -248,23 +235,27 @@
   <!-- Bottom bar -->
   <div class="fixed bottom-0 left-0 w-full z-50">
     <!-- Sin boleta -->
-    <div id="upload-state-empty" class="bg-neutral-950 border-t border-neutral-800 px-5 pb-8 pt-4">
-      <p class="text-center text-text-secondary text-caption-label mb-3">Fotografía la boleta para comenzar</p>
-      <button class="w-full h-14 bg-neutral-800 text-text-disabled rounded-xl font-semibold text-button-text flex items-center justify-center gap-2 cursor-not-allowed">
-        <span>Fotografiar boleta primero</span>
-        <span class="material-symbols-outlined">photo_camera</span>
-      </button>
+    <div id="upload-state-empty" style="display:none;" class="bg-neutral-950 border-t border-neutral-800 px-5 pb-6 pt-3">
+      <div class="flex items-center justify-between gap-3">
+        <p class="text-caption-label text-text-secondary">Fotografía para comenzar</p>
+        <button class="h-12 bg-neutral-800 text-text-disabled rounded-xl font-bold text-button-text flex items-center justify-center gap-2 transition-all px-5 cursor-not-allowed" disabled>
+          Fotografiar
+          <span class="material-symbols-outlined">photo_camera</span>
+        </button>
+      </div>
     </div>
     <!-- Con ítems -->
-    <div id="upload-state-ready" style="display:none;" class="bg-neutral-950 border-t border-neutral-800 px-5 pb-8 pt-4">
-      <div class="flex justify-between items-center mb-4">
-        <span class="text-text-secondary font-medium">Total de la Boleta</span>
-        <span class="text-lime-400 text-display-amount font-bold" id="upload-total">$0</span>
+    <div id="upload-state-ready" style="display:none;" class="bg-neutral-950 border-t border-neutral-800 px-5 pb-6 pt-3">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <p class="text-caption-label text-text-secondary">Total boleta</p>
+          <p class="text-lime-400 font-bold text-xl" id="upload-total">$0</p>
+        </div>
+        <button class="h-12 bg-primary-container text-on-primary-container rounded-xl font-bold text-button-text flex items-center justify-center gap-2 transition-all active:scale-[0.97] px-5 btn-primary" onclick="goTo('screen-config')">
+          Continuar
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
       </div>
-      <button class="w-full h-14 bg-primary-container text-on-primary-container rounded-xl font-semibold text-button-text flex items-center justify-center gap-2 transition-all active:scale-[0.97] shadow-lg btn-primary" onclick="goTo('screen-config')">
-        <span>Todo bien, continuar</span>
-        <span class="material-symbols-outlined">arrow_forward</span>
-      </button>
     </div>
   </div>
 </div>
@@ -284,7 +275,7 @@
     <button class="text-lime-400 p-1"><span class="material-symbols-outlined">account_circle</span></button>
   </header>
 
-  <main class="scroll-main pt-24 pb-32 px-screen-edge max-w-lg mx-auto">
+  <main class="scroll-main pt-24 pb-32 px-screen-edge max-w-lg mx-auto overscroll-contain">
     <div class="mb-8">
       <h1 class="text-section-title font-semibold text-primary-fixed mb-2 uppercase tracking-tighter">Nueva Sesión</h1>
       <p class="text-caption-label text-text-secondary">Configura los detalles para dividir la cuenta con tu grupo.</p>
@@ -330,13 +321,9 @@
       <!-- Transfer data -->
       <div class="pt-2 pb-2">
         <h2 class="text-section-title font-semibold text-primary-fixed mb-1">Datos de Transferencia</h2>
-        <p class="text-caption-label text-text-secondary">Para que tus amigos te paguen.</p>
+        <p class="text-caption-label text-text-secondary">Copia tus datos desde WhatsApp y pégalos aquí.</p>
       </div>
-      <div class="space-y-3">
-        <input class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 outline-none transition-all placeholder:text-text-disabled" placeholder="Titular de la cuenta" type="text" id="account-holder" value="Andrés Silva P."/>
-        <input class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 outline-none transition-all placeholder:text-text-disabled" placeholder="Banco" type="text" id="bank-name" value="Banco de Chile"/>
-        <input class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 outline-none transition-all placeholder:text-text-disabled" placeholder="Número de Cuenta" type="text" id="account-number" value="Vista · 12-345-6789"/>
-      </div>
+      <textarea id="transfer-data" rows="3" class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 outline-none transition-all placeholder:text-text-disabled resize-none text-sm" placeholder="Pega aquí los datos de transferencia (titular, banco, número de cuenta)">Andrés Silva P. · Banco de Chile · Vista 12-345-6789</textarea>
     </form>
   </main>
 
@@ -398,14 +385,6 @@
       </div>
     </div>
 
-    <!-- Link card -->
-    <div class="bg-surface-elevated border-2 border-dashed border-neutral-700 rounded-2xl p-6 flex flex-col items-center text-center">
-      <div class="bg-neutral-800 p-4 rounded-xl mb-4">
-        <span class="material-symbols-outlined text-lime-400" style="font-size:28px;">link</span>
-      </div>
-      <p class="text-caption-label text-text-secondary mb-1">Link de invitación</p>
-      <p class="text-body-main text-text-primary font-mono bg-neutral-900 px-3 py-1 rounded" id="share-link">split.app/cena-osaka-492</p>
-    </div>
   </main>
 
   <footer class="fixed bottom-0 left-0 w-full bg-neutral-950 px-screen-edge pb-10 pt-4 flex flex-col gap-3 z-40">
@@ -516,7 +495,7 @@
     </button>
   </header>
 
-  <main class="scroll-main pt-24 pb-40 px-5 max-w-2xl mx-auto">
+  <main class="scroll-main pt-24 pb-40 px-2 max-w-2xl mx-auto">
     <div class="mb-6">
       <h2 class="text-section-title font-semibold text-text-primary mb-1">Selecciona tus items</h2>
       <p class="text-caption-label text-text-secondary">Marca lo que consumiste para dividir la cuenta.</p>
@@ -546,13 +525,13 @@
 
   <!-- Fixed bottom -->
   <div class="fixed bottom-0 left-0 w-full bg-neutral-950 border-t border-neutral-800 z-50">
-    <div class="max-w-2xl mx-auto px-5 py-4 flex flex-col gap-3">
-      <div class="flex justify-between items-center">
-        <span class="text-caption-label text-text-secondary uppercase tracking-widest font-bold">Tu total</span>
-        <span class="text-display-amount font-bold text-primary-container" id="select-my-total">$0</span>
+    <div class="max-w-2xl mx-auto px-2 py-2 flex items-center justify-between gap-3">
+      <div>
+        <p class="text-caption-label text-text-secondary">Tu total</p>
+        <p class="text-display-amount font-bold text-primary-container" id="select-my-total">$0</p>
       </div>
-      <button class="w-full h-14 bg-primary-container text-primary-text-on-accent rounded-xl font-bold text-button-text active:scale-[0.97] transition-transform flex items-center justify-center gap-2 btn-primary" onclick="confirmItems()">
-        Confirmar mis items
+      <button class="h-12 bg-primary-container text-primary-text-on-accent rounded-xl font-bold text-button-text active:scale-[0.97] transition-transform flex items-center justify-center gap-2 btn-primary px-5" style="width:~45%" onclick="confirmItems()">
+        Confirmar
         <span class="material-symbols-outlined">arrow_forward</span>
       </button>
     </div>
@@ -611,19 +590,8 @@
         <span class="text-sm font-bold uppercase tracking-widest text-lime-400">Datos de Transferencia</span>
         <button onclick="copyTransfer()"><span class="material-symbols-outlined text-text-secondary">content_copy</span></button>
       </div>
-      <div class="p-card-inner space-y-4">
-        <div class="flex justify-between items-center">
-          <p class="text-caption-label text-text-secondary">Titular</p>
-          <p class="text-body-main text-text-primary font-bold" id="total-holder">Andrés Silva P.</p>
-        </div>
-        <div class="flex justify-between items-center">
-          <p class="text-caption-label text-text-secondary">Banco</p>
-          <p class="text-body-main text-text-primary font-bold" id="total-bank">Banco de Chile</p>
-        </div>
-        <div class="flex justify-between items-center">
-          <p class="text-caption-label text-text-secondary">Cuenta</p>
-          <p class="text-body-main text-text-primary font-bold" id="total-account">Vista · 12-345-6789</p>
-        </div>
+      <div class="p-card-inner">
+        <p class="text-body-main text-text-primary font-bold" id="total-transfer-data">Andrés Silva P. · Banco de Chile · Vista 12-345-6789</p>
       </div>
     </section>
   </main>
@@ -795,6 +763,7 @@ const state = {
   sessionName: 'Cena en Osaka',
   people: 4,
   tipPct: 10,
+  transferData: '',
   accountHolder: 'Andrés Silva P.',
   bank: 'Banco de Chile',
   accountNumber: 'Vista · 12-345-6789',
@@ -839,6 +808,7 @@ function goTo(screenId) {
   if (screenId === 'screen-total')     renderTotal();
   if (screenId === 'screen-share')     renderShare();
   if (screenId === 'screen-welcome')   renderWelcome();
+  if (screenId === 'screen-confirmed') renderConfirmed();
 }
 
 function goSelectBack() {
@@ -1124,9 +1094,8 @@ function generateLink() {
   // Save config values
   state.sessionName = document.getElementById('session-name').value || 'Mi Sesión';
   state.people = parseInt(document.getElementById('people-count').textContent);
-  state.accountHolder = document.getElementById('account-holder').value;
-  state.bank = document.getElementById('bank-name').value;
-  state.accountNumber = document.getElementById('account-number').value;
+  state.transferData = document.getElementById('transfer-data').value;
+  state.accountHolder = state.transferData.split('·')[0]?.trim() || state.transferData;
   goTo('screen-share');
 }
 
@@ -1368,9 +1337,7 @@ function renderTotal() {
   document.getElementById('total-tip-pct').textContent = state.tipPct;
   document.getElementById('total-tip-amount').textContent = formatCLP(state.myTip);
   document.getElementById('total-tip-bar').style.width = state.tipPct + '%';
-  document.getElementById('total-holder').textContent = state.accountHolder;
-  document.getElementById('total-bank').textContent = state.bank;
-  document.getElementById('total-account').textContent = state.accountNumber;
+  document.getElementById('total-transfer-data').textContent = state.transferData || state.accountHolder;
 
   // Items list
   const list = document.getElementById('total-items-list');
@@ -1399,7 +1366,7 @@ function renderTotal() {
 }
 
 function copyTransfer() {
-  const text = `${state.accountHolder} · ${state.bank} · ${state.accountNumber}`;
+  const text = state.transferData || `${state.accountHolder} · ${state.bank} · ${state.accountNumber}`;
   navigator.clipboard.writeText(text).catch(() => {});
   showToast('Datos copiados');
 }
