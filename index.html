@@ -323,7 +323,7 @@
         <h2 class="text-section-title font-semibold text-primary-fixed mb-1">Datos de Transferencia</h2>
         <p class="text-caption-label text-text-secondary">Copia tus datos desde WhatsApp y pégalos aquí.</p>
       </div>
-      <textarea id="transfer-data" rows="3" class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 outline-none transition-all placeholder:text-text-disabled resize-none text-sm" placeholder="Pega aquí los datos de transferencia (titular, banco, número de cuenta)">Andrés Silva P. · Banco de Chile · Vista 12-345-6789</textarea>
+      <textarea id="transfer-data" rows="3" class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 outline-none transition-all placeholder:text-text-disabled resize-none text-sm" placeholder="Ej: Nombre Apellido · Banco de Chile · Cuenta Vista 12345678"></textarea>
     </form>
   </main>
 
@@ -495,7 +495,7 @@
     </button>
   </header>
 
-  <main class="scroll-main pt-24 pb-40 px-2 max-w-2xl mx-auto">
+  <main class="scroll-main pt-24 pb-40 px-2 max-w-2xl mx-auto overscroll-contain">
     <div class="mb-6">
       <h2 class="text-section-title font-semibold text-text-primary mb-1">Selecciona tus items</h2>
       <p class="text-caption-label text-text-secondary">Marca lo que consumiste para dividir la cuenta.</p>
@@ -652,17 +652,15 @@
         <span class="text-section-title font-semibold text-primary" id="confirmed-tip">$0</span>
         <span class="text-caption-label text-text-secondary block">Sugerida</span>
       </div>
-      <div class="col-span-2 bg-surface-card border border-border-subtle rounded-xl p-card-inner flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-lime-400 flex items-center justify-center font-bold text-bg-base">A</div>
-          <div class="flex flex-col">
-            <span class="text-sm font-bold text-primary" id="confirmed-holder-name">Andrés Silva P.</span>
-            <span class="text-caption-label text-text-secondary" id="confirmed-session-label">Sesión: Cena en Osaka</span>
+      <div class="col-span-2 bg-surface-card border border-border-subtle rounded-xl p-card-inner">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-caption-label text-lime-400 font-bold uppercase tracking-widest">Datos de Transferencia</span>
+          <div class="px-3 py-1 bg-status-success-bg border border-primary-container/20 rounded-full">
+            <span class="text-badge-text font-bold text-primary-container">Completado</span>
           </div>
         </div>
-        <div class="px-3 py-1 bg-status-success-bg border border-primary-container/20 rounded-full">
-          <span class="text-badge-text font-bold text-primary-container">Completado</span>
-        </div>
+        <p class="text-sm text-text-primary font-medium leading-relaxed" id="confirmed-transfer-data"></p>
+        <span class="text-caption-label text-text-secondary mt-1 block" id="confirmed-session-label">Sesión: Cena en Osaka</span>
       </div>
     </div>
 
@@ -676,9 +674,6 @@
     <button class="w-full max-w-md h-14 bg-primary-container text-primary-text-on-accent font-bold text-button-text rounded-xl active:scale-[0.97] transition-transform flex items-center justify-center gap-2 shadow-lg btn-primary" onclick="goTo('screen-dashboard')">
       Ver dashboard en vivo
       <span class="material-symbols-outlined">arrow_forward</span>
-    </button>
-    <button class="mt-4 text-caption-label text-text-secondary hover:text-primary transition-colors" onclick="showToast('Comprobante descargado (demo)')">
-      Descargar Comprobante PDF
     </button>
   </footer>
 </div>
@@ -694,7 +689,7 @@
     <button class="text-lime-400" onclick="goTo('screen-upload')"><span class="material-symbols-outlined">add_circle</span></button>
   </header>
 
-  <main class="scroll-main px-screen-edge py-stack-gap space-y-6 max-w-2xl mx-auto pb-28">
+  <main class="scroll-main px-2 py-stack-gap space-y-6 pb-28">
     <!-- Live collected header -->
     <section class="space-y-4">
       <div class="flex justify-between items-end">
@@ -1000,21 +995,16 @@ function renderUploadItems() {
       </div>`;
     }
 
-    // Modo normal
+    // Modo normal — tap en la card para editar
     return `
-    <div class="bg-surface-card border-l-4 border-lime-400 p-card-inner rounded-xl flex justify-between items-center">
+    <div class="bg-surface-card border-l-4 border-lime-400 p-card-inner rounded-xl flex justify-between items-center cursor-pointer active:bg-neutral-800 transition-colors" onclick="startItemEdit(${i})">
       <div class="flex-1 min-w-0 mr-3">
         <span class="font-bold text-text-primary block truncate">${item.name}</span>
         <span class="text-text-secondary text-sm">${sub}</span>
       </div>
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <p class="text-sm font-bold text-lime-400">${formatCLP(total)}</p>
-        <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-800 text-text-secondary hover:text-lime-400 transition-colors" onclick="startItemEdit(${i})">
-          <span class="material-symbols-outlined" style="font-size:16px;">edit</span>
-        </button>
-        <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-800 text-text-secondary hover:text-status-danger transition-colors" onclick="removeItem(${i})">
-          <span class="material-symbols-outlined" style="font-size:16px;">delete</span>
-        </button>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <p class="text-base font-bold text-lime-400">${formatCLP(total)}</p>
+        <span class="material-symbols-outlined text-text-disabled" style="font-size:16px;">edit</span>
       </div>
     </div>`;
   }).join('');
@@ -1381,7 +1371,7 @@ function renderConfirmed() {
   document.getElementById('confirmed-amount').textContent = formatCLP(state.myTotal);
   document.getElementById('confirmed-subtotal').textContent = formatCLP(state.mySubtotal);
   document.getElementById('confirmed-tip').textContent = formatCLP(state.myTip);
-  document.getElementById('confirmed-holder-name').textContent = state.accountHolder;
+  document.getElementById('confirmed-transfer-data').textContent = state.transferData || state.accountHolder;
   document.getElementById('confirmed-session-label').textContent = 'Sesión: ' + state.sessionName;
 }
 
