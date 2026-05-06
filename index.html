@@ -392,7 +392,7 @@
       <span class="material-symbols-outlined">chat</span>
       Compartir por WhatsApp
     </button>
-    <button class="w-full h-14 bg-transparent border border-neutral-700 text-text-primary font-bold text-button-text rounded-xl flex items-center justify-center gap-3 active:scale-[0.97] transition-transform btn-primary" onclick="goTo('screen-select')">
+    <button class="w-full h-14 bg-transparent border border-neutral-700 text-text-primary font-bold text-button-text rounded-xl flex items-center justify-center gap-3 active:scale-[0.97] transition-transform btn-primary" onclick="goTo('screen-select','screen-share')">
       <span class="material-symbols-outlined">checklist</span>
       Seleccionar mis items
     </button>
@@ -472,7 +472,7 @@
         <span class="text-body-main text-text-secondary">Tu parte sugerida</span>
         <span class="text-section-title font-semibold text-text-primary" id="welcome-suggested">Calculando…</span>
       </div>
-      <button class="w-full h-14 bg-lime-400 hover:bg-lime-300 text-neutral-950 font-bold text-button-text rounded-xl transition-all duration-200 active:scale-95 shadow-[0_4px_20px_rgba(182,245,66,0.3)] flex items-center justify-center gap-2 btn-primary" onclick="goTo('screen-select')">
+      <button class="w-full h-14 bg-lime-400 hover:bg-lime-300 text-neutral-950 font-bold text-button-text rounded-xl transition-all duration-200 active:scale-95 shadow-[0_4px_20px_rgba(182,245,66,0.3)] flex items-center justify-center gap-2 btn-primary" onclick="goTo('screen-select','screen-welcome')">
         <span>Seleccionar mis items</span>
         <span class="material-symbols-outlined">chevron_right</span>
       </button>
@@ -770,24 +770,26 @@ const state = {
   // mode: 'none' | 'solo' | 'units' | 'split'
   selections: {}, // id -> { mode, units, splitWith }
 
+  // Solo el organizador (índice 0) — los demás se agregan cuando Supabase esté conectado
   participants: [
-    { name: 'Andrés (Tú)', items: [], total: 0, status: 'pending' },
-    { name: 'Rodrigo Paz', items: ['Lomo Saltado', 'Schop x2'], total: 22000, status: 'paid' },
-    { name: 'Camila Soto', items: ['Papas Fritas', 'Schop x1'], total: 17500, status: 'pending' },
-    { name: 'Ignacio Vera', items: [], total: 0, status: 'pending' },
-    { name: 'Valentina M.', items: ['Ceviche', 'Vino'], total: 18800, status: 'pending' },
+    { name: 'Tú', items: [], total: 0, status: 'pending' },
   ],
+  previousScreen: 'screen-share', // para goSelectBack()
 };
 
 // ─── NAVIGATION ──────────────────────────────
-function goTo(screenId) {
+function goTo(screenId, fromScreen) {
+  // Guardar origen antes de ir a selección (para el botón atrás)
+  if (screenId === 'screen-select' && fromScreen) {
+    state.previousScreen = fromScreen;
+  }
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const target = document.getElementById(screenId);
   if (target) target.classList.add('active');
   window.scrollTo(0, 0);
-  // Refresh dynamic screens
+  // Recalcular total al entrar a selección (punto 7)
+  if (screenId === 'screen-select')    { updateSelectTotal(); renderSelectItems(); }
   if (screenId === 'screen-dashboard') renderDashboard();
-  if (screenId === 'screen-select')    renderSelectItems();
   if (screenId === 'screen-total')     renderTotal();
   if (screenId === 'screen-share')     renderShare();
   if (screenId === 'screen-welcome')   renderWelcome();
@@ -795,9 +797,7 @@ function goTo(screenId) {
 }
 
 function goSelectBack() {
-  // Go back based on where we came from
-  const configDone = document.getElementById('session-name').value.length > 0;
-  goTo(configDone ? 'screen-share' : 'screen-welcome');
+  goTo(state.previousScreen);
 }
 
 // ─── SCREEN 1: UPLOAD ────────────────────────
@@ -988,8 +988,8 @@ function renderUploadItems() {
     return `
     <div class="bg-surface-card border-l-4 border-lime-400 p-card-inner rounded-xl flex justify-between items-center cursor-pointer active:bg-neutral-800 transition-colors" onclick="startItemEdit(${i})">
       <div class="flex-1 min-w-0 mr-3">
-        <span class="font-bold text-text-primary block truncate">${item.name}</span>
-        <span class="text-text-secondary text-sm">${sub}</span>
+        <span class="font-bold text-text-primary block truncate">${esc(item.name)}</span>
+        <span class="text-text-secondary text-sm">${esc(sub)}</span>
       </div>
       <div class="flex items-center gap-3 flex-shrink-0">
         <p class="text-base font-bold text-lime-400">${formatCLP(total)}</p>
@@ -1209,7 +1209,7 @@ function renderItemCard(item) {
         <span class="material-symbols-outlined transition-all" style="font-size:20px;color:${isSelected ? '#b6f542' : '#8A8A8A'}">restaurant</span>
       </div>
       <div class="flex-1 min-w-0">
-        <span class="font-semibold text-text-primary block">${item.name}</span>
+        <span class="font-semibold text-text-primary block">${esc(item.name)}</span>
         <span class="text-caption-label text-lime-400">${priceLabel}</span>
       </div>
       <!-- Checkmark cuando está seleccionado -->
@@ -1335,7 +1335,7 @@ function renderTotal() {
       return `
       <div class="bg-surface-card border-l-4 border-lime-400 p-card-inner rounded-xl flex justify-between items-center">
         <div>
-          <p class="text-body-main text-text-primary font-bold">${item.name}</p>
+          <p class="text-body-main text-text-primary font-bold">${esc(item.name)}</p>
           <p class="text-caption-label text-text-secondary">${label}</p>
         </div>
         <p class="text-lg font-bold text-text-primary">${formatCLP(price)}</p>
@@ -1416,7 +1416,7 @@ function renderDashboard() {
     <div class="bg-surface-card p-card-inner rounded-xl border border-border-subtle flex flex-col justify-between h-28 relative overflow-hidden card-hover transition-colors">
       <div class="absolute left-0 top-0 bottom-0 w-1 ${color}"></div>
       <div class="flex justify-between items-start">
-        <span class="font-bold text-body-main">${item.name}</span>
+        <span class="font-bold text-body-main">${esc(item.name)}</span>
         <span class="material-symbols-outlined ${iconColor} fill-icon">${icon}</span>
       </div>
       <div class="flex justify-between items-end">
@@ -1481,6 +1481,16 @@ function renderDashboard() {
 // ─── UTILITIES ───────────────────────────────
 function formatCLP(amount) {
   return '$' + Math.round(amount).toLocaleString('es-CL');
+}
+
+// Sanitizar strings antes de inyectarlos en innerHTML (previene XSS)
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function showToast(msg) {
