@@ -588,7 +588,7 @@
         <button onclick="copyTransfer()"><span class="material-symbols-outlined text-text-secondary">content_copy</span></button>
       </div>
       <div class="p-card-inner">
-        <p class="text-body-main text-text-primary font-bold" id="total-transfer-data">Andrés Silva P. · Banco de Chile · Vista 12-345-6789</p>
+        <p class="text-body-main text-text-primary whitespace-pre-line" id="total-transfer-data"></p>
       </div>
     </section>
   </main>
@@ -1344,7 +1344,7 @@ function renderTotal() {
 }
 
 function copyTransfer() {
-  const text = state.transferData || `${state.accountHolder} · ${state.bank} · ${state.accountNumber}`;
+  const text = state.transferData || state.accountHolder;
   navigator.clipboard.writeText(text).catch(() => {});
   showToast('Datos copiados');
 }
@@ -1381,21 +1381,36 @@ function renderDashboard() {
     const needed = item.billUnits || 1; // total en boleta
     const totalPrice = item.price * needed;
 
-    // Contar cuántas unidades reclamó el participante 0 (Tú)
+    // Contar cuánto reclamó el participante 0 (Tú)
     const mysel = getSelection(item.id);
-    let claimed = 0;
-    if (mysel.mode === 'solo')  claimed = item.billUnits > 1 ? (mysel.units || 1) : 1;
-    if (mysel.mode === 'split') claimed = item.billUnits > 1 ? (mysel.units || 1) : 1;
+    let claimedUnits = 0;   // unidades físicas reclamadas
+    let claimedFrac  = 0;   // fracción del valor (para split)
+    if (mysel.mode === 'solo') {
+      claimedUnits = item.billUnits > 1 ? (mysel.units || 1) : 1;
+      claimedFrac  = claimedUnits;
+    }
+    if (mysel.mode === 'split') {
+      claimedUnits = item.billUnits > 1 ? (mysel.units || 1) : 1;
+      claimedFrac  = claimedUnits / (mysel.splitWith || 2); // fracción real
+    }
 
-    const isFull = claimed >= needed;
-    const isEmpty = claimed === 0;
+    const isFull  = claimedFrac >= needed;
+    const isEmpty = claimedFrac === 0;
     if (isEmpty) unclaimed++;
     const color     = isFull ? 'bg-status-success' : isEmpty ? 'bg-status-danger' : 'bg-status-warning';
     const icon      = isFull ? 'check_circle' : isEmpty ? 'error' : 'warning';
     const iconColor = isFull ? 'text-status-success' : isEmpty ? 'text-status-danger' : 'text-status-warning';
-    const claimedLabel = needed > 1
-      ? `${claimed}/${needed} unidades reclamadas`
-      : isEmpty ? 'Sin reclamar' : 'Reclamado';
+
+    let claimedLabel;
+    if (isEmpty) {
+      claimedLabel = 'Sin reclamar';
+    } else if (mysel.mode === 'split') {
+      claimedLabel = `1/${mysel.splitWith || 2} partes reclamadas`;
+    } else if (needed > 1) {
+      claimedLabel = `${claimedUnits}/${needed} unidades reclamadas`;
+    } else {
+      claimedLabel = 'Reclamado';
+    }
 
     return `
     <div class="bg-surface-card p-card-inner rounded-xl border border-border-subtle flex flex-col justify-between h-28 relative overflow-hidden card-hover transition-colors">
@@ -1444,7 +1459,7 @@ function renderDashboard() {
     const borderColor = isPaid ? 'border-lime-400' : 'border-neutral-700';
     const initial = idx === 0 ? 'Tú' : (idx + 1).toString();
     const bgColor = isPaid ? 'bg-lime-400 text-bg-base' : 'bg-neutral-700 text-text-primary';
-    const name = idx === 0 ? 'Tú' : p.name;
+    const name = idx === 0 ? 'Organizador (Tú)' : p.name;
 
     return `
     <div class="bg-surface-card p-card-inner rounded-xl flex items-center justify-between border border-border-subtle">
