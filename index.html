@@ -315,7 +315,7 @@
       <!-- Session name -->
       <div class="pt-2">
         <h2 class="text-section-title font-semibold text-primary-fixed mb-1">Nombre de la sesión</h2>
-        <input class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 focus:border-transparent outline-none transition-all placeholder:text-text-disabled" placeholder="Ej: Cena en Osaka 🍣" type="text" id="session-name" value="Cena en Osaka"/>
+        <input class="w-full bg-surface-elevated border border-border-subtle text-text-primary rounded-xl px-4 py-4 focus:ring-2 focus:ring-lime-400 focus:border-transparent outline-none transition-all placeholder:text-text-disabled" placeholder="Ej: Cena en Osaka 🍣" type="text" id="session-name" value=""/>
       </div>
 
       <!-- Transfer data -->
@@ -571,15 +571,12 @@
 
       <!-- Tip -->
       <div class="bg-surface-elevated p-card-inner rounded-xl border border-border-subtle mt-2">
-        <div class="flex justify-between items-center mb-1">
+        <div class="flex justify-between items-center">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-status-warning">volunteer_activism</span>
-            <p class="text-body-main text-text-secondary">Propina Sugerida (<span id="total-tip-pct">10</span>%)</p>
+            <p class="text-body-main text-text-secondary">Propina (<span id="total-tip-pct">10</span>%)</p>
           </div>
           <p class="text-body-main text-text-primary font-semibold" id="total-tip-amount">$0</p>
-        </div>
-        <div class="w-full bg-neutral-800 h-1.5 rounded-full mt-3 overflow-hidden">
-          <div class="bg-lime-400 h-full rounded-full" id="total-tip-bar" style="width:10%"></div>
         </div>
       </div>
     </section>
@@ -766,8 +763,8 @@ const state = {
   myTotal: 0,
   mySubtotal: 0,
   myTip: 0,
-  confirmedCount: 0,  // how many participants confirmed
-  totalParticipants: 5,
+  confirmedCount: 0,
+  totalParticipants: 4, // se actualiza con state.people al generar link
 
   // Items from bill — en upload solo existen como líneas de boleta con nombre/precio/unidades
   // En selección el usuario decide: solo yo, múltiples unidades, o compartir con N
@@ -1076,9 +1073,9 @@ function updateTip(val) {
 }
 
 function generateLink() {
-  // Save config values
-  state.sessionName = document.getElementById('session-name').value || 'Mi Sesión';
+  state.sessionName = document.getElementById('session-name').value.trim() || 'Cena con amigos';
   state.people = parseInt(document.getElementById('people-count').textContent);
+  state.totalParticipants = state.people; // sincronizar
   state.transferData = document.getElementById('transfer-data').value;
   state.accountHolder = state.transferData.split('·')[0]?.trim() || state.transferData;
   goTo('screen-share');
@@ -1155,7 +1152,7 @@ function renderItemCard(item) {
   // Sublínea de precio según estado
   let priceLabel;
   if (isNone) {
-    priceLabel = formatCLP(item.price) + (hasUnits ? ' c/u &nbsp;·&nbsp; ' + item.billUnits + ' en mesa' : '');
+    priceLabel = formatCLP(item.price) + (hasUnits ? ' c/u' : '');
   } else if (isSolo) {
     priceLabel = hasUnits
       ? units + ' × ' + formatCLP(item.price) + ' = <strong class="text-white">' + formatCLP(myPrice) + '</strong>'
@@ -1428,27 +1425,43 @@ function renderDashboard() {
     alert.style.display = 'none';
   }
 
-  // Participants
+  // Participantes — generados dinámicamente según state.people
+  // Solo el primero (organizador/Tú) tiene datos reales, el resto son placeholders
   const partList = document.getElementById('dash-participants-list');
-  partList.innerHTML = state.participants.map(p => {
+  const dynamicParticipants = [];
+  // Participante 0: el usuario actual
+  dynamicParticipants.push(state.participants[0]);
+  // Resto: placeholders hasta completar state.people
+  const letters = ['B','C','D','E','F','G','H','I','J'];
+  for (let i = 1; i < state.people; i++) {
+    dynamicParticipants.push({
+      name: 'Participante ' + (i + 1),
+      items: [],
+      total: 0,
+      status: 'pending'
+    });
+  }
+
+  partList.innerHTML = dynamicParticipants.map((p, idx) => {
     const isPaid = p.status === 'paid';
     const statusColor = isPaid ? 'text-status-success bg-status-success-bg' : 'text-status-warning bg-status-warning-bg';
     const statusLabel = isPaid ? 'Pagado' : p.total > 0 ? 'Pendiente' : 'Sin reclamar';
     const borderColor = isPaid ? 'border-lime-400' : 'border-neutral-700';
-    const initial = p.name.charAt(0).toUpperCase();
+    const initial = idx === 0 ? 'Tú' : (idx + 1).toString();
     const bgColor = isPaid ? 'bg-lime-400 text-bg-base' : 'bg-neutral-700 text-text-primary';
+    const name = idx === 0 ? 'Tú' : p.name;
 
     return `
     <div class="bg-surface-card p-card-inner rounded-xl flex items-center justify-between border border-border-subtle">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full ${bgColor} flex items-center justify-center font-bold text-sm border-2 ${borderColor}">${initial}</div>
         <div>
-          <p class="font-bold text-on-surface">${p.name}</p>
+          <p class="font-bold text-on-surface">${name}</p>
           <p class="text-caption-label text-text-secondary">${p.items.join(', ') || 'Sin items'}</p>
         </div>
       </div>
       <div class="text-right flex flex-col items-end gap-1">
-        <span class="font-bold text-on-surface">${formatCLP(p.total)}</span>
+        <span class="font-bold text-on-surface">${p.total > 0 ? formatCLP(p.total) : '—'}</span>
         <span class="text-badge-text font-bold ${statusColor} px-3 py-1 rounded-full uppercase">${statusLabel}</span>
       </div>
     </div>`;
