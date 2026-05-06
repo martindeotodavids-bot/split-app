@@ -801,7 +801,7 @@ function goSelectBack() {
 }
 
 // ─── SCREEN 1: UPLOAD ────────────────────────
-const ANTHROPIC_KEY = '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';
+// API key movida a Vercel Edge Function (/api/scan.js)
 
 const DEFAULT_ITEMS = [
   { name: 'Schop Kunstmann', price: 5000,  billUnits: 8, totalUnits: 8 },
@@ -848,37 +848,22 @@ function loadDefaultItems() {
 async function analyzeWithClaude(dataUrl) {
   const [meta, base64] = dataUrl.split(',');
   const mimeType = meta.match(/:(.*?);/)[1];
-  const prompt = `Eres un asistente que analiza boletas de restaurantes chilenos.
-Analiza la imagen y extrae TODOS los ítems con sus precios.
-Devuelve ÚNICAMENTE un JSON válido, sin texto adicional:
-{"items":[{"name":"Nombre","price":5000,"units":1}]}
-Reglas: price=precio unitario CLP entero, units=cantidad, NO incluyas el total.`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    // Llama a la Edge Function — la key vive solo en el servidor
+    const res = await fetch('/api/scan', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-6',
-        max_tokens: 1024,
-        messages: [{ role: 'user', content: [
-          { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64 } },
-          { type: 'text', text: prompt }
-        ]}]
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: base64, mimeType }),
     });
-    if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message); }
-    const data = await res.json();
-    const match = data.content[0].text.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('Sin respuesta válida');
-    const parsed = JSON.parse(match[0]);
+    if (!res.ok) {
+      const e = await res.json();
+      throw new Error(e.error || 'Error del servidor');
+    }
+    const parsed = await res.json();
     if (!parsed.items?.length) throw new Error('No se detectaron ítems');
     state.items = parsed.items.map((item, i) => ({
-      id: i + 1, name: item.name,
+      id: i + 1,
+      name: item.name,
       price: Math.round(item.price),
       billUnits: Math.max(1, Math.round(item.units || 1)),
       totalUnits: Math.max(1, Math.round(item.units || 1)),
@@ -886,7 +871,7 @@ Reglas: price=precio unitario CLP entero, units=cantidad, NO incluyas el total.`
     state.selections = {};
     onScanSuccess();
   } catch (err) {
-    // Fallback a items demo si la API falla
+    // Fallback a ítems demo si la API falla
     loadDefaultItems();
   }
 }
