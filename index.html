@@ -649,15 +649,12 @@
         <span class="text-section-title font-semibold text-primary" id="confirmed-tip">$0</span>
         <span class="text-caption-label text-text-secondary block">Sugerida</span>
       </div>
-      <div class="col-span-2 bg-surface-card border border-border-subtle rounded-xl p-card-inner">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-caption-label text-lime-400 font-bold uppercase tracking-widest">Datos de Transferencia</span>
-          <div class="px-3 py-1 bg-status-success-bg border border-primary-container/20 rounded-full">
-            <span class="text-badge-text font-bold text-primary-container">Completado</span>
-          </div>
+      <div class="col-span-2 bg-status-success-bg border border-primary-container/20 rounded-xl p-card-inner flex items-center justify-between">
+        <div>
+          <p class="font-bold text-status-success">Pago registrado</p>
+          <span class="text-caption-label text-text-secondary" id="confirmed-session-label">Sesión: Cena en Osaka</span>
         </div>
-        <p class="text-sm text-text-primary font-medium leading-relaxed" id="confirmed-transfer-data"></p>
-        <span class="text-caption-label text-text-secondary mt-1 block" id="confirmed-session-label">Sesión: Cena en Osaka</span>
+        <span class="material-symbols-outlined fill-icon text-status-success" style="font-size:32px;">check_circle</span>
       </div>
     </div>
 
@@ -1318,8 +1315,7 @@ function renderTotal() {
   document.getElementById('total-session-badge').textContent = 'Sesión: ' + state.sessionName;
   document.getElementById('total-tip-pct').textContent = state.tipPct;
   document.getElementById('total-tip-amount').textContent = formatCLP(state.myTip);
-  document.getElementById('total-tip-bar').style.width = state.tipPct + '%';
-  document.getElementById('total-transfer-data').textContent = state.transferData || state.accountHolder;
+  document.getElementById('total-transfer-data').textContent = state.transferData || '—';
 
   // Items list
   const list = document.getElementById('total-items-list');
@@ -1363,7 +1359,6 @@ function renderConfirmed() {
   document.getElementById('confirmed-amount').textContent = formatCLP(state.myTotal);
   document.getElementById('confirmed-subtotal').textContent = formatCLP(state.mySubtotal);
   document.getElementById('confirmed-tip').textContent = formatCLP(state.myTip);
-  document.getElementById('confirmed-transfer-data').textContent = state.transferData || state.accountHolder;
   document.getElementById('confirmed-session-label').textContent = 'Sesión: ' + state.sessionName;
 }
 
@@ -1379,28 +1374,28 @@ function renderDashboard() {
   document.getElementById('dash-pct').textContent = pct + '% Recolectado';
   document.getElementById('dashboard-collected-bar').style.width = pct + '%';
 
-  // Items grid
+  // Items grid — usa billUnits para saber cuántas hay en mesa
   const grid = document.getElementById('dash-items-grid');
   let unclaimed = 0;
   grid.innerHTML = state.items.map(item => {
-    const claimedByAll = state.participants.filter(p => p.items.some(i => i.includes(item.name))).length;
-    const needed = item.type === 'stepper' ? item.totalUnits : 1;
-    const claimed = item.type === 'stepper'
-      ? state.participants.reduce((s, p) => {
-          const match = p.items.find(i => i.includes(item.name));
-          if (match) { const n = parseInt(match.split('x')[1]); return s + (n||1); }
-          return s;
-        }, 0)
-      : claimedByAll;
+    const needed = item.billUnits || 1; // total en boleta
+    const totalPrice = item.price * needed;
+
+    // Contar cuántas unidades reclamó el participante 0 (Tú)
+    const mysel = getSelection(item.id);
+    let claimed = 0;
+    if (mysel.mode === 'solo')  claimed = item.billUnits > 1 ? (mysel.units || 1) : 1;
+    if (mysel.mode === 'split') claimed = item.billUnits > 1 ? (mysel.units || 1) : 1;
 
     const isFull = claimed >= needed;
     const isEmpty = claimed === 0;
     if (isEmpty) unclaimed++;
-    const color = isFull ? 'bg-status-success' : isEmpty ? 'bg-status-danger' : 'bg-status-warning';
-    const icon = isFull ? 'check_circle' : isEmpty ? 'error' : 'warning';
+    const color     = isFull ? 'bg-status-success' : isEmpty ? 'bg-status-danger' : 'bg-status-warning';
+    const icon      = isFull ? 'check_circle' : isEmpty ? 'error' : 'warning';
     const iconColor = isFull ? 'text-status-success' : isEmpty ? 'text-status-danger' : 'text-status-warning';
-    const price = item.type === 'stepper' ? item.unitPrice * item.totalUnits : item.price;
-    const claimedLabel = item.type === 'stepper' ? `${claimed}/${needed} unidades` : `${claimed}/${needed} reclamado`;
+    const claimedLabel = needed > 1
+      ? `${claimed}/${needed} unidades reclamadas`
+      : isEmpty ? 'Sin reclamar' : 'Reclamado';
 
     return `
     <div class="bg-surface-card p-card-inner rounded-xl border border-border-subtle flex flex-col justify-between h-28 relative overflow-hidden card-hover transition-colors">
@@ -1411,7 +1406,7 @@ function renderDashboard() {
       </div>
       <div class="flex justify-between items-end">
         <span class="text-caption-label text-text-secondary">${claimedLabel}</span>
-        <span class="font-bold text-body-main">${formatCLP(price)}</span>
+        <span class="font-bold text-body-main">${formatCLP(totalPrice)}</span>
       </div>
     </div>`;
   }).join('');
